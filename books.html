@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Browse E-Books</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header>
+    <h1>Browse E-Books</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="books.html">Books</a>
+    </nav>
+  </header>
+
+  <main>
+    <input type="text" id="searchBox" placeholder="Search by title or author..." onkeyup="searchBooks()"/>
+
+    <section class="book-gallery" id="bookGallery">
+      <div class="book">
+        <img src="images/sample-cover.jpg" alt="Book Cover"/>
+        <h3>Sample Book</h3>
+        <p>Author: John Doe</p>
+        <a href="ebooks/sample-book.pdf" download>Download</a>
+      </div>
+      <!-- Add more book cards here -->
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

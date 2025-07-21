@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Signup/Login & Pay ₹1</title>
+</head>
+<body>
+  <h2>Signup</h2>
+  <form id="signupForm">
+    Name: <input type="text" id="name"><br>
+    Email: <input type="email" id="email"><br>
+    Password: <input type="password" id="password"><br>
+    <button type="submit">Signup</button>
+  </form>
+
+  <h2>Login</h2>
+  <form id="loginForm">
+    Email: <input type="email" id="loginEmail"><br>
+    Password: <input type="password" id="loginPassword"><br>
+    <button type="submit">Login</button>
+  </form>
+
+  <div id="dashboard" style="display:none;">
+    <h2>Welcome! Pay ₹1 to access video</h2>
+    <p>Use any UPI app (PhonePe, Google Pay, Paytm)</p>
+    <a href="upi://pay?pa=7386488444.ibz@icici&pn=Dilar&am=1&cu=INR&tn=Video%20Access%20Fee" id="upiPayLink" style="color: blue; font-weight: bold;" target="_blank">Click here to pay ₹1 via UPI</a><br><br>
+    <button id="confirmPaymentBtn">I Paid</button>
+
+    <div id="videoAccess" style="display:none;">
+      <h3>Access Granted - Video:</h3>
+      <video width="320" height="240" controls>
+        <source src="video.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwUQnwo6wj-oBD5j5z5gAuZqE6nej5TQ0Icqc60AXC296AHpm3ZJm9bK2XUhGtT2NvHmA/exec';
+
+    document.getElementById("signupForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      fetch(scriptURL, {
+        method: 'POST',
+        body: JSON.stringify({
+          action: "signup",
+          name: document.getElementById("name").value,
+          email: document.getElementById("email").value,
+          password: document.getElementById("password").value
+        })
+      }).then(res => res.text()).then(alert);
+    });
+
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      fetch(scriptURL, {
+        method: 'POST',
+        body: JSON.stringify({
+          action: "login",
+          email: document.getElementById("loginEmail").value,
+          password: document.getElementById("loginPassword").value
+        })
+      }).then(res => res.text()).then(response => {
+        if (response === "Login Success") {
+          document.getElementById("dashboard").style.display = "block";
+        } else {
+          alert(response);
+        }
+      });
+    });
+
+    document.getElementById("confirmPaymentBtn").addEventListener("click", function () {
+      alert("Payment confirmed manually. You can now access the video.");
+      document.getElementById("videoAccess").style.display = "block";
+    });
+  </script>
+</body>
+</html>
